@@ -556,29 +556,29 @@ app.post('/extractText', (req,resp) => {
                         console.timeEnd('asyncFunc');
                         if (loadedModel !== null) {
                             console.time('answer');
-                            const answers = await loadedModel.findAnswers("Who is the son?", langString.substring(92,207));
-                            const answers1 = await loadedModel.findAnswers("Is a resident of where?", langString.substring(152,207).replaceAll(',',' '));
-                            const answers2 = await loadedModel.findAnswers("How old is he?", langString.substring(92,207));
-                            // console.log("FIrst one: ", answers);
-                            // console.log("FIrst one: ", answers1);
-                            // console.log("FIrst one: ", answers2);
-                            console.log(langString);
-                            // await translate(answers[2].text, {from: 'en', to: 'hi'})
-                            //     .then(res=> {
-                            //         Object.assign(detailsObj, {'name': res.text})
-                            // });
+                            const answers = await loadedModel.findAnswers("Who is the son?", langString.substring(160,218));
+                            const answers1 = await loadedModel.findAnswers("Is a resident of where?", langString.substring(218,278).replaceAll(',',' '));
+                            const answers2 = await loadedModel.findAnswers("How old is he?", langString.substring(160,278));
                             
-                            // await translate(answers1[1].text, {from: 'en', to: 'hi'})
-                            //     .then(res=> {
-                            //         Object.assign(detailsObj, {'address': res.text})
-                            // });
+                            await translate(answers[0].text, {from: 'en', to: 'hi'})
+                                .then(res=> {
+                                    Object.assign(detailsObj, {'dather_name': res.text})
+                            });
                             
-                            // await translate(answers2[0].text, {from: 'en', to: 'hi'})
-                            //     .then(res=> {
-                            //         Object.assign(detailsObj, {'age': res.text})
-                            // });
+                            await translate(answers1[1].text, {from: 'en', to: 'hi'})
+                                .then(res=> {
+                                    Object.assign(detailsObj, {'address': res.text})
+                            });
                             
-                            Object.assign(detailsObj, {'father_name': langString.substring(113,130)});
+                            await translate(answers2[0].text, {from: 'en', to: 'hi'})
+                                .then(res=> {
+                                    Object.assign(detailsObj, {'age': res.text})
+                            });
+
+                            await translate(langString.substring(160,174), {from: 'en', to: 'hi'})
+                                .then(res=> {
+                                    Object.assign(detailsObj, {'name': res.text})
+                            });
                             
                             console.timeEnd('answer');
                             console.log("THE OBJECT IS: \n", detailsObj);
